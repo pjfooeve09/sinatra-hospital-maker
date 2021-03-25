@@ -1,0 +1,9 @@
+<p>Your Hospitals:</P>
+<br>
+<% current_user.hospitals.each_with_index do |hospital, i| %> 
+  <%= i + 1 %>.  Hospital Name: <%= hospital.hospital_name %> | Hospital Country: <%= hospital.hospital_country %> ---- <a href="/hospitals/<%= hospital.id %>">Open Hospital</a>
+  <br>
+<% end %>
+<br>
+<p>Add a new Hospital <a href="/hospitals/new">here</a></p>
+<p>Log out <a href="/logout">here</a></p>

@@ -10,19 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 3) do
+ActiveRecord::Schema.define(version: 2) do
 
   create_table "hospitals", force: :cascade do |t|
     t.string "hospital_name"
     t.string "hospital_country"
     t.integer "user_id"
-  end
-
-  create_table "patients", force: :cascade do |t|
-    t.string "patient_name"
-    t.integer "age"
-    t.string "patient_place_of_birth"
-    t.integer "hospital_id"
   end
 
   create_table "users", force: :cascade do |t|

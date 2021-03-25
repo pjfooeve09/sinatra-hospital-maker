@@ -9,5 +9,4 @@ use Rack::MethodOverride
 
 use UserController
 use HospitalController
-use PatientController
 run ApplicationController

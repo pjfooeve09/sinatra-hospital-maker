@@ -1,0 +1,12 @@
+<p>ID: <%= @hospital.id %> => <%= @hospital.hospital_name %> - <%= @hospital.hospital_country %></p>
+
+<form method="post" action="/hospitals/<%= @hospital.id %>/delete">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete Hospital">
+</form>
+
+<p><a href="/hospitals/<%= @hospital.id %>/edit">Edit Hospital</a></p>
+<p></a><a href="/hospitals/new">Add Hospital</a></p>
+<p><a href="/users/show">All Hospitals</a></p>
+
+<p>Log out <a href="/logout">here</a></p>
