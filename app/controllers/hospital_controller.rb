@@ -1,12 +1,11 @@
 class HospitalController < ApplicationController
 
-      get '/hospitals' do
-        redirect_if_not_logged_in
-        #@hospitals = Hospital.all
+      get '/hospitals' do 
+        redirect_if_not_logged_in 
         erb :'hospitals/hospitals'
       end
 
-      get '/hospitals/new' do
+      get '/hospitals/new' do  
         redirect_if_not_logged_in
         erb :'hospitals/create_hospital'  
       end
@@ -16,8 +15,7 @@ class HospitalController < ApplicationController
         if params[:hospital_name] == "" || params[:hospital_country] == ""
           redirect to "/hospitals/new"
         else
-          @user = User.find_by(id: session[:user_id])
-          @hospital = Hospital.create(hospital_name: params[:hospital_name], hospital_country: params[:hospital_country], user_id: @user.id)
+          @hospital = Hospital.create(hospital_name: params[:hospital_name], hospital_country: params[:hospital_country], user_id: current_user.id)
           @hospital.save
           redirect to "/hospitals/#{@hospital.id}"
         end
@@ -25,9 +23,7 @@ class HospitalController < ApplicationController
 
       get '/hospitals/:id' do
         redirect_if_not_logged_in
-        @hospital = Hospital.find_by_id(params[:id])
-        @user = User.find_by(id: session[:user_id])
-        if @hospital.user_id == @user.id 
+        if hospital.user_id == current_user.id 
           erb :'/hospitals/show_hospital' 
         else
           redirect to '/hospitals'
@@ -36,9 +32,7 @@ class HospitalController < ApplicationController
 
       get '/hospitals/:id/edit' do
         redirect_if_not_logged_in
-        @hospital = Hospital.find_by_id(params[:id])
-        @user = User.find_by(id: session[:user_id])
-          if @hospital.user_id == @user.id 
+          if hospital.user_id == current_user.id 
             erb :'hospitals/edit_hospital'
           else
             redirect to '/hospitals'
@@ -47,21 +41,18 @@ class HospitalController < ApplicationController
 
       patch '/hospitals/:id' do 
         redirect_if_not_logged_in
-        @hospital = Hospital.find(params[:id])
-        @user = User.find_by(id: session[:user_id])
-         if @hospital.user_id == @user.id && params[:hospital_name] != "" && params[:hospital_country] != ""
-          @hospital.update(hospital_name: params[:hospital_name])
-          @hospital.update(hospital_country: params[:hospital_country])
-          redirect to "/hospitals/#{@hospital.id}"
+         if hospital.user_id == current_user.id && params[:hospital_name] != "" && params[:hospital_country] != ""
+          hospital.update(hospital_name: params[:hospital_name])
+          hospital.update(hospital_country: params[:hospital_country])
+          redirect to "/hospitals/#{hospital.id}"
          else
-          redirect to "/hospitals/#{@hospital.id}/edit"
+          redirect to "/hospitals/#{hospital.id}/edit"
          end
       end
     
       delete '/hospitals/:id/delete' do
         redirect_if_not_logged_in
-          @hospital = Hospital.find_by_id(params[:id])
-          @hospital.destroy
+          hospital.destroy
           redirect to '/users/show'
       end
       
